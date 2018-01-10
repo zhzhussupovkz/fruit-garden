@@ -1,0 +1,31 @@
+# -*- coding: utf-8 -*-
+import pygame
+import sys
+import random
+from core.hero import *
+
+class World():
+    SIZE = (640, 640)
+
+    def __init__(self):
+        pygame.init()
+        pygame.display.set_caption('Fruit garden')
+        self.pygame = pygame
+        self.screen = pygame.display.set_mode(self.SIZE)
+        self.hero = Hero(self.screen, 48, 500)
+
+    def draw(self):
+        self.hero.draw()
+
+    def play(self):
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+            key = pygame.key.get_pressed()
+            if key[pygame.K_ESCAPE]:
+                sys.exit()
+            self.draw()
+            self.hero.walk()
+            pygame.display.flip()
+        pygame.quit()
