@@ -12,7 +12,8 @@ class World():
         pygame.display.set_caption('Fruit garden')
         self.pygame = pygame
         self.screen = pygame.display.set_mode(self.SIZE)
-        self.hero = Hero(self.screen, 48, 500)
+        self.background_image = pygame.image.load("./images/levels/level1.png").convert()
+        self.hero = Hero(self.screen, 48, 248)
 
     def draw(self):
         self.hero.draw()
@@ -25,6 +26,7 @@ class World():
             key = pygame.key.get_pressed()
             if key[pygame.K_ESCAPE]:
                 sys.exit()
+            self.screen.blit(self.background_image, [0, 0])
             self.draw()
             self.hero.walk()
             pygame.display.flip()

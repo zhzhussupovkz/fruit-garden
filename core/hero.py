@@ -19,17 +19,17 @@ class Hero():
 
     def move_right(self):
         self.image = pygame.image.load("./images/hero/player-right.png")
-        if self.x <= 732:
+        if self.x <= 620:
             self.x += 0.4
 
     def move_down(self):
         self.image = pygame.image.load("./images/hero/player-down.png")
-        if self.y <= 550:
+        if self.y <= 620:
             self.y += 0.5
 
     def move_up(self):
         self.image = pygame.image.load("./images/hero/player-up.png")
-        if self.y >= 240:
+        if self.y >= 32:
             self.y -= 0.4
 
     def walk(self):
