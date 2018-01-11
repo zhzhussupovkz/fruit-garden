@@ -10,6 +10,9 @@ class Hero():
         self.lives = 3
 
     def draw(self):
+        if self.lives > 0:
+            for i in range(self.lives):
+                self.screen.blit(self.heart, [620-(i*20), 8])
         self.screen.blit(self.image, [self.x, self.y])
 
     def move_left(self):
