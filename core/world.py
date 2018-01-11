@@ -3,6 +3,7 @@ import pygame
 import sys
 import random
 from core.hero import *
+from core.tree import *
 
 class World():
     SIZE = (640, 640)
@@ -13,10 +14,20 @@ class World():
         self.pygame = pygame
         self.screen = pygame.display.set_mode(self.SIZE)
         self.background_image = pygame.image.load("./images/levels/level1.png").convert()
-        self.hero = Hero(self.screen, 48, 248)
+        self.hero = Hero(self.screen, 48, 280)
+        self.trees = []
+        self.gen_trees()
+
+    def gen_trees(self):
+        i = 64
+        while i <= 632:
+            self.trees.append(Tree(self.screen, i, 272))
+            i += 75
 
     def draw(self):
         self.hero.draw()
+        for tree in self.trees:
+            tree.draw()
 
     def play(self):
         while True:
