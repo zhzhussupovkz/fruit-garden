@@ -14,3 +14,6 @@ class Tree():
             self.screen.blit(self.image_apple, [self.x, self.y])
         else:
             self.screen.blit(self.image, [self.x, self.y])
+
+    def apple_tree(self):
+        self.apple = True

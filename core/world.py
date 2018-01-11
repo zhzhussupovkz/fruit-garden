@@ -23,6 +23,10 @@ class World():
         while i <= 632:
             self.trees.append(Tree(self.screen, i, 272))
             i += 75
+        j = 320
+        while j <= 632:
+            self.trees.append(Tree(self.screen, j, 560))
+            j += 75
 
     def draw(self):
         self.hero.draw()
