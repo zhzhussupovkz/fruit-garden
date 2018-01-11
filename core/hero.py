@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
 import pygame
+from core.weapon import *
 
 class Hero():
     def __init__(self, screen, x, y):
+        self.screen = screen
         self.image = pygame.image.load("./images/hero/player-down.png")
         self.heart = pygame.image.load('./images/hero/heart.png')
-        self.x, self.y = x, y
-        self.screen = screen
-        self.lives = 3
+        self.x, self.y, self.face, self.lives = x, y, 'right', 3
+        self.weapon = Weapon(self.screen, self)
 
     def draw(self):
         if self.lives > 0:
             for i in range(self.lives):
                 self.screen.blit(self.heart, [620-(i*20), 8])
         self.screen.blit(self.image, [self.x, self.y])
+        self.weapon.draw()
 
     def move_left(self):
         self.image = pygame.image.load("./images/hero/player-left.png")
@@ -45,3 +47,4 @@ class Hero():
             self.move_up()
         elif key[pygame.K_DOWN]:
             self.move_down()
+        self.weapon.update()
