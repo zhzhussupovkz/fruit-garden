@@ -7,7 +7,7 @@ class Hero():
         self.screen = screen
         self.image = pygame.image.load("./images/hero/player-down.png")
         self.heart = pygame.image.load('./images/hero/heart.png')
-        self.x, self.y, self.face, self.lives = x, y, 'right', 3
+        self.x, self.y, self.face, self.lives = x, y, 'down', 3
         self.weapon = Weapon(self.screen, self)
 
     def draw(self):
@@ -19,21 +19,25 @@ class Hero():
 
     def move_left(self):
         self.image = pygame.image.load("./images/hero/player-left.png")
+        self.face = 'left'
         if self.x >= 32:
             self.x -= 0.4
 
     def move_right(self):
         self.image = pygame.image.load("./images/hero/player-right.png")
+        self.face = 'right'
         if self.x <= 620:
             self.x += 0.4
 
     def move_down(self):
         self.image = pygame.image.load("./images/hero/player-down.png")
+        self.face = 'down'
         if self.y <= 620:
             self.y += 0.5
 
     def move_up(self):
         self.image = pygame.image.load("./images/hero/player-up.png")
+        self.face = 'up'
         if self.y >= 32:
             self.y -= 0.4
 
@@ -48,3 +52,4 @@ class Hero():
         elif key[pygame.K_DOWN]:
             self.move_down()
         self.weapon.update()
+        # print (self.weapon.x, self.weapon.y)
