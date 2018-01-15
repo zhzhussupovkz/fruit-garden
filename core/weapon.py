@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import pygame
 
+# player's weapon class (apple)
 class Weapon():
     def __init__(self, screen, hero):
         self.hero = hero

@@ -2,6 +2,7 @@
 import pygame
 from core.weapon import *
 
+# hero class - player
 class Hero():
     def __init__(self, screen, x, y):
         self.screen = screen
@@ -52,4 +53,3 @@ class Hero():
         elif key[pygame.K_DOWN]:
             self.move_down()
         self.weapon.update()
-        # print (self.weapon.x, self.weapon.y)
