@@ -4,6 +4,7 @@ import sys
 import random
 from core.hero import *
 from core.tree import *
+from core.star import *
 
 class World():
     SIZE = (640, 640)
@@ -15,8 +16,9 @@ class World():
         self.screen = pygame.display.set_mode(self.SIZE)
         self.background_image = pygame.image.load("./images/levels/level1.png").convert()
         self.hero = Hero(self.screen, 48, 280)
-        self.trees = []
+        self.trees, self.stars = [], []
         self.gen_trees()
+        self.gen_stars()
 
     def gen_trees(self):
         i = 64
@@ -32,10 +34,30 @@ class World():
         self.trees.append(Tree(self.screen, 596, 364))
         self.trees.append(Tree(self.screen, 596, 386))
 
+    def gen_stars(self):
+        i = 248
+        while i <= 550:
+            self.stars.append(Star(self.screen, i, 287))
+            i += 64
+        i = 300
+        while i <= 540:
+            self.stars.append(Star(self.screen, i, 416))
+            i += 48
+        j = 320
+        while j <= 400:
+            self.stars.append(Star(self.screen, 576, j))
+            j += 32
+        i = 332
+        while i <= 630:
+            self.stars.append(Star(self.screen, i, 576))
+            i += 75
+
     def draw(self):
         self.hero.draw()
         for tree in self.trees:
             tree.draw()
+        for star in self.stars:
+            star.draw()
 
     def play(self):
         while True:
