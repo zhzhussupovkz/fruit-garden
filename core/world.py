@@ -52,8 +52,8 @@ class World():
             self.stars.append(Star(self.screen, i, 576))
             i += 75
 
-        j = 440
-        while j <= 520:
+        j = 460
+        while j <= 560:
             self.stars.append(Star(self.screen, 273, j))
             j += 75
 
