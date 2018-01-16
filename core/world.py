@@ -52,6 +52,11 @@ class World():
             self.stars.append(Star(self.screen, i, 576))
             i += 75
 
+        j = 440
+        while j <= 520:
+            self.stars.append(Star(self.screen, 273, j))
+            j += 75
+
     def draw(self):
         self.hero.draw()
         for tree in self.trees:
