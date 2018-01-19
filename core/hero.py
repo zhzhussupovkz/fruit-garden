@@ -89,5 +89,6 @@ class Hero(pygame.sprite.Group):
 
     def update(self):
         super(Hero, self).update()
+        self.face = self.hero_sprite.face
         self.x, self.y = self.hero_sprite.x, self.hero_sprite.y
         self.weapon.update()
