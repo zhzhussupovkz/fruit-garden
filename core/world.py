@@ -12,6 +12,7 @@ class World():
 
     def __init__(self):
         pygame.init()
+        self.clock=pygame.time.Clock()
         pygame.display.set_caption('Fruit garden')
         self.pygame = pygame
         self.screen = pygame.display.set_mode(self.SIZE)
@@ -21,6 +22,7 @@ class World():
         self.generate_stars()
         self.generate_enemies()
         self.hero = Hero(self.screen, 48, 280)
+        self.hero = pygame.sprite.Group(self.hero)
 
     def generate_trees(self):
         i = 64
@@ -72,7 +74,7 @@ class World():
             star.draw()
         for enemy in self.enemies:
             enemy.draw()
-        self.hero.draw()
+        # self.hero.drawing()
 
     def play(self):
         while True:
@@ -86,6 +88,8 @@ class World():
             self.draw()
             for enemy in self.enemies:
                 enemy.walk()
-            self.hero.walk()
+            self.hero.update()
+            self.hero.draw(self.screen)
             pygame.display.flip()
+            self.clock.tick(480)
         pygame.quit()
