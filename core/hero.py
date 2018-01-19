@@ -3,9 +3,9 @@ import pygame
 from core.weapon import *
 
 # hero class - player
-class Hero(pygame.sprite.Sprite):
+class HeroSprite(pygame.sprite.Sprite):
     def __init__(self, screen, x, y):
-        super(Hero, self).__init__()
+        super(HeroSprite, self).__init__()
         self.screen = screen
         self.left, self.right, self.up, self.down = [], [], [], []
         for i in range(9):
@@ -15,17 +15,8 @@ class Hero(pygame.sprite.Sprite):
             self.up.append(pygame.image.load("./images/hero/hero-up_{}.png".format(i+1)))
         self.index = 0
         self.image = self.left[self.index]
-        self.heart = pygame.image.load('./images/hero/heart.png')
-        self.x, self.y, self.face, self.lives = x, y, 'down', 3
+        self.x, self.y, self.face = x, y, 'down'
         self.rect = pygame.Rect(self.x, self.y, 16, 16)
-        self.weapon = Weapon(self.screen, self)
-
-    # def drawing(self):
-    #     if self.lives > 0:
-    #         for i in range(self.lives):
-    #             self.screen.blit(self.heart, [620-(i*20), 8])
-    #     # self.screen.blit(self.image, [self.x, self.y])
-    #     self.weapon.draw()
 
     def move_left(self):
         self.index += 1
@@ -77,4 +68,26 @@ class Hero(pygame.sprite.Sprite):
             self.move_up()
         elif key[pygame.K_DOWN]:
             self.move_down()
+
+class Hero(pygame.sprite.Group):
+    def __init__(self, screen, x, y):
+        self.screen = screen
+        self.hero_sprite = HeroSprite(screen, x, y)
+        self.x, self.y = self.hero_sprite.x, self.hero_sprite.y
+        self.face = self.hero_sprite.face
+        self.heart = pygame.image.load('./images/hero/heart.png')
+        self.lives = 3
+        self.weapon = Weapon(self.screen, self)
+        super(Hero, self).__init__(self.hero_sprite)
+
+
+    def drawing(self):
+        if self.lives > 0:
+            for i in range(self.lives):
+                self.screen.blit(self.heart, [620-(i*20), 8])
+        self.weapon.draw()
+
+    def update(self):
+        super(Hero, self).update()
+        self.x, self.y = self.hero_sprite.x, self.hero_sprite.y
         self.weapon.update()

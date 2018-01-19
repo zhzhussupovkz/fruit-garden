@@ -22,7 +22,6 @@ class World():
         self.generate_stars()
         self.generate_enemies()
         self.hero = Hero(self.screen, 48, 280)
-        self.hero = pygame.sprite.Group(self.hero)
 
     def generate_trees(self):
         i = 64
@@ -74,7 +73,7 @@ class World():
             star.draw()
         for enemy in self.enemies:
             enemy.draw()
-        # self.hero.drawing()
+        self.hero.drawing()
 
     def play(self):
         while True:
