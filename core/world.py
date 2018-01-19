@@ -63,6 +63,7 @@ class World():
         self.enemies.append(Enemy(self.screen, 460, 280, 'right'))
         self.enemies.append(Enemy(self.screen, 456, 410, 'left'))
         self.enemies.append(Enemy(self.screen, 500, 570, 'right'))
+        self.enemies.append(Enemy(self.screen, 273, 500, 'up'))
 
     def draw(self):
         for tree in self.trees:

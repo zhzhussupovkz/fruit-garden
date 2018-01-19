@@ -39,7 +39,7 @@ class Enemy():
             if self.y <= self.down_y:
                 self.y += random.uniform(0.06, 0.08)
             else:
-                self.face == 'up'
+                self.face = 'up'
         elif self.face == 'up':
             if self.y >= self.up_y:
                 self.y -= random.uniform(0.06, 0.08)
