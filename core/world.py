@@ -5,6 +5,7 @@ import random
 from core.hero import *
 from core.tree import *
 from core.star import *
+from core.enemy import *
 
 class World():
     SIZE = (640, 640)
@@ -15,12 +16,13 @@ class World():
         self.pygame = pygame
         self.screen = pygame.display.set_mode(self.SIZE)
         self.background_image = pygame.image.load("./images/levels/level1.png").convert()
-        self.trees, self.stars = [], []
-        self.gen_trees()
-        self.gen_stars()
+        self.trees, self.stars, self.enemies = [], [], []
+        self.generate_trees()
+        self.generate_stars()
+        self.generate_enemies()
         self.hero = Hero(self.screen, 48, 280)
 
-    def gen_trees(self):
+    def generate_trees(self):
         i = 64
         while i <= 632:
             self.trees.append(Tree(self.screen, i, 272))
@@ -34,7 +36,7 @@ class World():
         self.trees.append(Tree(self.screen, 596, 364))
         self.trees.append(Tree(self.screen, 596, 386))
 
-    def gen_stars(self):
+    def generate_stars(self):
         i = 248
         while i <= 550:
             self.stars.append(Star(self.screen, i, 287))
@@ -57,11 +59,18 @@ class World():
             self.stars.append(Star(self.screen, 273, j))
             j += 75
 
+    def generate_enemies(self):
+        self.enemies.append(Enemy(self.screen, 220, 280, 'left'))
+        self.enemies.append(Enemy(self.screen, 460, 280, 'right'))
+        self.enemies.append(Enemy(self.screen, 500, 570, 'right'))
+
     def draw(self):
         for tree in self.trees:
             tree.draw()
         for star in self.stars:
             star.draw()
+        for enemy in self.enemies:
+            enemy.draw()
         self.hero.draw()
 
     def play(self):
@@ -74,6 +83,8 @@ class World():
                 sys.exit()
             self.screen.blit(self.background_image, [0, 0])
             self.draw()
+            for enemy in self.enemies:
+                enemy.walk()
             self.hero.walk()
             pygame.display.flip()
         pygame.quit()
