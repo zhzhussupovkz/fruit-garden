@@ -15,10 +15,10 @@ class World():
         self.pygame = pygame
         self.screen = pygame.display.set_mode(self.SIZE)
         self.background_image = pygame.image.load("./images/levels/level1.png").convert()
-        self.hero = Hero(self.screen, 48, 280)
         self.trees, self.stars = [], []
         self.gen_trees()
         self.gen_stars()
+        self.hero = Hero(self.screen, 48, 280)
 
     def gen_trees(self):
         i = 64
@@ -58,11 +58,11 @@ class World():
             j += 75
 
     def draw(self):
-        self.hero.draw()
         for tree in self.trees:
             tree.draw()
         for star in self.stars:
             star.draw()
+        self.hero.draw()
 
     def play(self):
         while True:
