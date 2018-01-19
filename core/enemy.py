@@ -27,21 +27,21 @@ class Enemy():
     def walk(self):
         if self.face == 'right':
             if self.x <= self.right_x:
-                self.x += 0.08
+                self.x += random.uniform(0.06, 0.08)
             else:
                 self.face = 'left'
         elif self.face == 'left':
             if self.x >= self.left_x:
-                self.x -= 0.08
+                self.x -= random.uniform(0.06, 0.08)
             else:
                 self.face = 'right'
         elif self.face == 'down':
             if self.y <= self.down_y:
-                self.y += 0.08
+                self.y += random.uniform(0.06, 0.08)
             else:
                 self.face == 'up'
         elif self.face == 'up':
             if self.y >= self.up_y:
-                self.y -= 0.08
+                self.y -= random.uniform(0.06, 0.08)
             else:
                 self.face = 'down'

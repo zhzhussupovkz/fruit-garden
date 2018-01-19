@@ -53,7 +53,6 @@ class World():
         while i <= 630:
             self.stars.append(Star(self.screen, i, 576))
             i += 75
-
         j = 460
         while j <= 560:
             self.stars.append(Star(self.screen, 273, j))
@@ -62,6 +61,7 @@ class World():
     def generate_enemies(self):
         self.enemies.append(Enemy(self.screen, 220, 280, 'left'))
         self.enemies.append(Enemy(self.screen, 460, 280, 'right'))
+        self.enemies.append(Enemy(self.screen, 456, 410, 'left'))
         self.enemies.append(Enemy(self.screen, 500, 570, 'right'))
 
     def draw(self):
