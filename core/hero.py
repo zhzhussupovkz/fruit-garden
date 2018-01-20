@@ -14,46 +14,46 @@ class HeroSprite(pygame.sprite.Sprite):
             self.down.append(pygame.image.load("./images/hero/hero-down_{}.png".format(i+1)))
             self.up.append(pygame.image.load("./images/hero/hero-up_{}.png".format(i+1)))
         self.index = 0
-        self.image = self.left[self.index]
-        self.x, self.y, self.face = x, y, 'down'
+        self.image = self.right[self.index]
+        self.x, self.y, self.face = x, y, 'right'
         self.rect = pygame.Rect(self.x, self.y, 16, 16)
 
     def move_left(self):
+        self.face = 'left'
         self.index += 1
         if self.index >= len(self.left):
             self.index = 0
         self.image = self.left[self.index]
-        self.face = 'left'
         if self.x >= 32:
             self.rect = pygame.Rect(self.x - 0.25, self.y, 16, 16)
             self.x -= 0.25
 
     def move_right(self):
+        self.face = 'right'
         self.index += 1
         if self.index >= len(self.right):
             self.index = 0
         self.image = self.right[self.index]
-        self.face = 'right'
         if self.x <= 620:
             self.rect = pygame.Rect(self.x + 0.25, self.y, 16, 16)
             self.x += 0.25
 
     def move_down(self):
+        self.face = 'down'
         self.index += 1
         if self.index >= len(self.down):
             self.index = 0
         self.image = self.down[self.index]
-        self.face = 'down'
         if self.y <= 620:
             self.rect = pygame.Rect(self.x, self.y + 0.25, 16, 16)
             self.y += 0.25
 
     def move_up(self):
+        self.face = 'up'
         self.index += 1
         if self.index >= len(self.up):
             self.index = 0
         self.image = self.up[self.index]
-        self.face = 'up'
         if self.y >= 32:
             self.rect = pygame.Rect(self.x, self.y - 0.25, 16, 16)
             self.y -= 0.25
@@ -74,12 +74,11 @@ class Hero(pygame.sprite.Group):
         self.screen = screen
         self.hero_sprite = HeroSprite(screen, x, y)
         self.x, self.y = self.hero_sprite.x, self.hero_sprite.y
-        self.face = self.hero_sprite.face
+        self.face = 'right'
         self.heart = pygame.image.load('./images/hero/heart.png')
         self.lives = 3
         self.weapon = Weapon(self.screen, self)
         super(Hero, self).__init__(self.hero_sprite)
-
 
     def drawing(self):
         if self.lives > 0:
@@ -88,7 +87,7 @@ class Hero(pygame.sprite.Group):
         self.weapon.draw()
 
     def update(self):
-        super(Hero, self).update()
         self.face = self.hero_sprite.face
         self.x, self.y = self.hero_sprite.x, self.hero_sprite.y
         self.weapon.update()
+        super(Hero, self).update()
