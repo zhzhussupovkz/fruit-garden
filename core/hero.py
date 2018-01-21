@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import pygame
 import math
+import datetime
 from core.weapon import *
 
 # hero class - player
@@ -76,16 +77,25 @@ class Hero(pygame.sprite.Group):
         self.hero_sprite = HeroSprite(screen, x, y)
         self.x, self.y = self.hero_sprite.x, self.hero_sprite.y
         self.face = 'right'
-        self.heart = pygame.image.load('./images/hero/heart.png')
-        self.lives = 3
+        self.heart_img = pygame.image.load('./images/hero/heart.png')
+        self.star_img = pygame.image.load('./images/hero/star.png')
+        self.lives, self.stars = 3, 0
         self.weapon = Weapon(self.screen, self)
+        self.ui = pygame.font.SysFont("monaco", 15)
+        self.ui_score = pygame.font.SysFont("monaco", 24)
         super(Hero, self).__init__(self.hero_sprite)
 
     def drawing(self):
         if self.lives > 0:
             for i in range(self.lives):
-                self.screen.blit(self.heart, [620-(i*20), 8])
+                self.screen.blit(self.heart_img, [620-(i*20), 8])
+            self.screen.blit(self.star_img, [540, 6])
+            stars_score = self.ui_score.render("{}".format(int(self.stars)), 3, (255, 255, 255))
+            self.screen.blit(stars_score, [558, 7])
         self.weapon.draw()
+        cyear = datetime.datetime.now().year
+        copyright = self.ui.render("Copyright (c) %s by zhzhussupovkz" % cyear, 3, (255, 255, 255))
+        self.screen.blit(copyright, [240, 620])
 
     def update(self):
         self.face = self.hero_sprite.face
@@ -94,6 +104,7 @@ class Hero(pygame.sprite.Group):
         if key[pygame.K_SPACE]:
             self.attack()
         self.weapon.update()
+        self.collect_stars()
         self.add_injury_to_enemies()
         super(Hero, self).update()
 
@@ -108,7 +119,12 @@ class Hero(pygame.sprite.Group):
                     self.weapon.drawing = False
                     self.window.enemies.pop(self.window.enemies.index(enemy))
 
-
+    def collect_stars(self):
+        for star in self.window.stars:
+            d = math.sqrt((self.x - star.x)**2 + (self.y - star.y)**2)
+            if d <= 16:
+                self.window.stars.pop(self.window.stars.index(star))
+                self.stars += 1
 
 
 
