@@ -96,14 +96,6 @@ class Hero(pygame.sprite.Group):
         super(Hero, self).update()
 
     def attack(self):
-        if self.face == 'left':
-            self.weapon.x, self.weapon.y = self.x + 12, self.y + 16
-        elif self.face == 'right':
-            self.weapon.x, self.weapon.y = self.x + 12, self.y + 16
-        elif self.face == 'up':
-            self.weapon.x, self.weapon.y = self.x + 12, self.y + 16
-        elif self.face == 'down':
-            self.weapon.x, self.weapon.y = self.x + 12, self.y + 16
         self.weapon.drawing = True
 
 

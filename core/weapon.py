@@ -32,4 +32,13 @@ class Weapon():
             if self.x <= 4 or self.x >= 632 or self.y <= 4 or self.y >= 632:
                 self.drawing = False
                 self.last_direction = self.hero.face
+        else:
+            if self.hero.face == 'left':
+                self.x, self.y = self.hero.x + 12, self.hero.y + 16
+            elif self.hero.face == 'right':
+                self.x, self.y = self.hero.x + 12, self.hero.y + 16
+            elif self.hero.face == 'up':
+                self.x, self.y = self.hero.x + 12, self.hero.y + 16
+            elif self.hero.face == 'down':
+                self.x, self.y = self.hero.x + 12, self.hero.y + 16
 
