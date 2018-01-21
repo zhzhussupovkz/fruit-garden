@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pygame
+import math
 from core.weapon import *
 
 # hero class - player
@@ -70,8 +71,8 @@ class HeroSprite(pygame.sprite.Sprite):
             self.move_down()
 
 class Hero(pygame.sprite.Group):
-    def __init__(self, screen, x, y):
-        self.screen = screen
+    def __init__(self, window, screen, x, y):
+        self.window, self.screen = window, screen
         self.hero_sprite = HeroSprite(screen, x, y)
         self.x, self.y = self.hero_sprite.x, self.hero_sprite.y
         self.face = 'right'
@@ -93,10 +94,19 @@ class Hero(pygame.sprite.Group):
         if key[pygame.K_SPACE]:
             self.attack()
         self.weapon.update()
+        self.add_injury_to_enemies()
         super(Hero, self).update()
 
     def attack(self):
         self.weapon.drawing = True
+
+    def add_injury_to_enemies(self):
+        if self.weapon.drawing == True:
+            for enemy in self.window.enemies:
+                d = math.sqrt((self.weapon.x - enemy.x)**2 + (self.weapon.y - enemy.y)**2)
+                if d <= 4:
+                    self.weapon.drawing = False
+                    self.window.enemies.pop(self.window.enemies.index(enemy))
 
 
 
