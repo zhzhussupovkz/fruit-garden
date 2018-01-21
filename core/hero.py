@@ -72,14 +72,14 @@ class HeroSprite(pygame.sprite.Sprite):
             self.move_down()
 
 class Hero(pygame.sprite.Group):
-    def __init__(self, window, screen, x, y):
+    def __init__(self, window, screen, x, y, lives):
         self.window, self.screen = window, screen
         self.hero_sprite = HeroSprite(screen, x, y)
         self.x, self.y = self.hero_sprite.x, self.hero_sprite.y
         self.face = 'right'
         self.heart_img = pygame.image.load('./images/hero/heart.png')
         self.star_img = pygame.image.load('./images/hero/star.png')
-        self.lives, self.stars = 3, 0
+        self.lives, self.stars, self.stamina = lives, 0, 100
         self.weapon = Weapon(self.screen, self)
         self.ui = pygame.font.SysFont("monaco", 15)
         self.ui_score = pygame.font.SysFont("monaco", 24)
@@ -89,9 +89,9 @@ class Hero(pygame.sprite.Group):
         if self.lives > 0:
             for i in range(self.lives):
                 self.screen.blit(self.heart_img, [620-(i*20), 8])
-            self.screen.blit(self.star_img, [540, 6])
-            stars_score = self.ui_score.render("{}".format(int(self.stars)), 3, (255, 255, 255))
-            self.screen.blit(stars_score, [558, 7])
+        self.screen.blit(self.star_img, [540, 6])
+        stars_score = self.ui_score.render("{}".format(int(self.stars)), 3, (255, 255, 255))
+        self.screen.blit(stars_score, [558, 7])
         self.weapon.draw()
         cyear = datetime.datetime.now().year
         copyright = self.ui.render("Copyright (c) %s by zhzhussupovkz" % cyear, 3, (255, 255, 255))
@@ -108,9 +108,11 @@ class Hero(pygame.sprite.Group):
         self.add_injury_to_enemies()
         super(Hero, self).update()
 
+    # attack by weapon
     def attack(self):
         self.weapon.drawing = True
 
+    # add injury to enemies
     def add_injury_to_enemies(self):
         if self.weapon.drawing == True:
             for enemy in self.window.enemies:
@@ -118,7 +120,13 @@ class Hero(pygame.sprite.Group):
                 if d <= 4:
                     self.weapon.drawing = False
                     self.window.enemies.pop(self.window.enemies.index(enemy))
+        else:
+            for enemy in self.window.enemies:
+                d_hero = math.sqrt((self.x - enemy.x)**2 + (self.y - enemy.y)**2)
+                if d_hero <= 8:
+                    self.add_injury()
 
+    # collect stars
     def collect_stars(self):
         for star in self.window.stars:
             d = math.sqrt((self.x - star.x)**2 + (self.y - star.y)**2)
@@ -126,5 +134,25 @@ class Hero(pygame.sprite.Group):
                 self.window.stars.pop(self.window.stars.index(star))
                 self.stars += 1
 
+    # add injury when enemies attack hero
+    def add_injury(self):
+        if self.face == 'left':
+            self.x += 8
+        elif self.face == 'right':
+            self.x -= 8
+        elif self.face == 'up':
+            self.y += 8
+        elif self.face == 'down':
+            self.y -= 8
+        self.stamina -= 10
+        if self.stamina <= 0:
+            self.stamina = 0
+            self.reboot()
 
-
+    # reboot hero if die
+    def reboot(self):
+        if self.lives > 1:
+            self.lives -= 1
+        else:
+            self.lives = 3
+        self.__init__(self.window, self.screen, 48, 266, self.lives)
