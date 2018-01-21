@@ -89,5 +89,24 @@ class Hero(pygame.sprite.Group):
     def update(self):
         self.face = self.hero_sprite.face
         self.x, self.y = self.hero_sprite.x, self.hero_sprite.y
+        key = pygame.key.get_pressed()
+        if key[pygame.K_SPACE]:
+            self.attack()
         self.weapon.update()
         super(Hero, self).update()
+
+    def attack(self):
+        if self.face == 'left':
+            self.weapon.x, self.weapon.y = self.x + 12, self.y + 16
+        elif self.face == 'right':
+            self.weapon.x, self.weapon.y = self.x + 12, self.y + 16
+        elif self.face == 'up':
+            self.weapon.x, self.weapon.y = self.x + 12, self.y + 16
+        elif self.face == 'down':
+            self.weapon.x, self.weapon.y = self.x + 12, self.y + 16
+        self.weapon.drawing = True
+
+
+
+
+
