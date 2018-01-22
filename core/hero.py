@@ -79,7 +79,8 @@ class Hero(pygame.sprite.Group):
         self.face = 'right'
         self.heart_img = pygame.image.load('./images/hero/heart.png')
         self.star_img = pygame.image.load('./images/hero/star.png')
-        self.lives, self.stars, self.stamina = lives, 0, 100
+        self.enemy_img = pygame.image.load("./images/enemies/enemy-down.png")
+        self.lives, self.stars, self.enemy_score, self.stamina = lives, 0, 0, 100
         self.weapon = Weapon(self.screen, self)
         self.ui = pygame.font.SysFont("monaco", 15)
         self.ui_score = pygame.font.SysFont("monaco", 24)
@@ -90,8 +91,11 @@ class Hero(pygame.sprite.Group):
             for i in range(self.lives):
                 self.screen.blit(self.heart_img, [620-(i*20), 8])
         self.screen.blit(self.star_img, [540, 6])
-        stars_score = self.ui_score.render("{}".format(int(self.stars)), 3, (255, 255, 255))
-        self.screen.blit(stars_score, [558, 7])
+        self.screen.blit(self.enemy_img, [500, 6])
+        ui_stars_score = self.ui_score.render("{}".format(int(self.stars)), 3, (255, 255, 255))
+        ui_enemy_score = self.ui_score.render("{}".format(int(self.enemy_score)), 3, (255, 255, 255))
+        self.screen.blit(ui_stars_score, [558, 7])
+        self.screen.blit(ui_enemy_score, [520, 7])
         self.weapon.draw()
         cyear = datetime.datetime.now().year
         copyright = self.ui.render("Copyright (c) %s by zhzhussupovkz" % cyear, 3, (255, 255, 255))
@@ -120,6 +124,7 @@ class Hero(pygame.sprite.Group):
                 if d <= 4:
                     self.weapon.drawing = False
                     self.window.enemies.pop(self.window.enemies.index(enemy))
+                    self.enemy_score += 1
         else:
             for enemy in self.window.enemies:
                 d_hero = math.sqrt((self.x - enemy.x)**2 + (self.y - enemy.y)**2)
