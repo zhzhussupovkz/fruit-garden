@@ -76,7 +76,7 @@ class Hero(pygame.sprite.Group):
         self.window, self.screen = window, screen
         self.hero_sprite = HeroSprite(screen, x, y)
         self.x, self.y = self.hero_sprite.x, self.hero_sprite.y
-        self.face = 'right'
+        self.face, self.centerx, self.centery = 'right', self.hero_sprite.rect.centerx, self.hero_sprite.rect.centery
         self.heart_img = pygame.image.load('./images/hero/heart.png')
         self.star_img = pygame.image.load('./images/hero/star.png')
         self.enemy_img = pygame.image.load("./images/enemies/enemy-down.png")
@@ -104,6 +104,7 @@ class Hero(pygame.sprite.Group):
     def update(self):
         self.face = self.hero_sprite.face
         self.x, self.y = self.hero_sprite.x, self.hero_sprite.y
+        self.centerx, self.centery = self.hero_sprite.rect.centerx, self.hero_sprite.rect.centery
         key = pygame.key.get_pressed()
         if key[pygame.K_SPACE]:
             self.attack()
@@ -134,7 +135,7 @@ class Hero(pygame.sprite.Group):
     # collect stars
     def collect_stars(self):
         for star in self.window.stars:
-            d = math.sqrt((self.x - star.x)**2 + (self.y - star.y)**2)
+            d = math.sqrt((self.centerx - star.x)**2 + (self.centery - star.y)**2)
             if d <= 16:
                 self.window.stars.pop(self.window.stars.index(star))
                 self.stars += 1
