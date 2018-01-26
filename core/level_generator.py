@@ -63,5 +63,5 @@ class LevelGenerator():
             enemies.append(Enemy(self.screen, 460, 280, 'right'))
             enemies.append(Enemy(self.screen, 456, 410, 'left'))
             enemies.append(Enemy(self.screen, 500, 570, 'right'))
-            enemies.append(Enemy(self.screen, 273, 500, 'up'))
+            enemies.append(Enemy(self.screen, 263, 500, 'up'))
         return enemies

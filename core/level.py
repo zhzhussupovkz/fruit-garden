@@ -21,11 +21,11 @@ class Level():
         for star in self.stars:
             star.draw()
         for enemy in self.enemies:
-            enemy.draw()
+            enemy.draw(self.world.screen)
         self.hero.drawing()
         self.hero.draw(self.world.screen)
 
     def update(self):
         for enemy in self.enemies:
-            enemy.walk()
+            enemy.update()
         self.hero.update()

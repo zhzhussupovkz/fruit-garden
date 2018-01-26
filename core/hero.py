@@ -68,7 +68,7 @@ class Hero(pygame.sprite.Group):
         self.face, self.centerx, self.centery = 'right', self.hero_sprite.rect.centerx, self.hero_sprite.rect.centery
         self.heart_img = pygame.image.load('./images/hero/heart.png')
         self.star_img = pygame.image.load('./images/hero/star.png')
-        self.enemy_img = pygame.image.load("./images/enemies/enemy-down.png")
+        self.enemy_img = pygame.image.load("./images/enemies/enemy-down_3.png")
         self.lives, self.stars, self.enemy_score, self.stamina = lives, 0, 0, 100
         self.weapon = Weapon(self.screen, self)
         self.ui = pygame.font.SysFont("monaco", 15)
@@ -80,7 +80,7 @@ class Hero(pygame.sprite.Group):
             for i in range(self.lives):
                 self.screen.blit(self.heart_img, [620-(i*20), 8])
         self.screen.blit(self.star_img, [540, 6])
-        self.screen.blit(self.enemy_img, [500, 6])
+        self.screen.blit(self.enemy_img, [484, 2])
         ui_stars_score = self.ui_score.render("{}".format(int(self.stars)), 3, (255, 255, 255))
         ui_enemy_score = self.ui_score.render("{}".format(int(self.enemy_score)), 3, (255, 255, 255))
         self.screen.blit(ui_stars_score, [558, 7])
