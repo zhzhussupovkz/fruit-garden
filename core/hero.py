@@ -72,9 +72,10 @@ class HeroSprite(pygame.sprite.Sprite):
             self.move_down()
 
 class Hero(pygame.sprite.Group):
-    def __init__(self, window, screen, x, y, lives):
-        self.window, self.screen = window, screen
-        self.hero_sprite = HeroSprite(screen, x, y)
+    def __init__(self, world, x, y, lives):
+        self.world = world
+        self.screen = self.world.screen
+        self.hero_sprite = HeroSprite(self.screen, x, y)
         self.x, self.y = self.hero_sprite.x, self.hero_sprite.y
         self.face, self.centerx, self.centery = 'right', self.hero_sprite.rect.centerx, self.hero_sprite.rect.centery
         self.heart_img = pygame.image.load('./images/hero/heart.png')
@@ -120,24 +121,24 @@ class Hero(pygame.sprite.Group):
     # add injury to enemies
     def add_injury_to_enemies(self):
         if self.weapon.drawing == True:
-            for enemy in self.window.enemies:
+            for enemy in self.world.enemies:
                 d = math.sqrt((self.weapon.x - enemy.x)**2 + (self.weapon.y - enemy.y)**2)
                 if d <= 4:
                     self.weapon.drawing = False
-                    self.window.enemies.pop(self.window.enemies.index(enemy))
+                    self.world.enemies.pop(self.world.enemies.index(enemy))
                     self.enemy_score += 1
         else:
-            for enemy in self.window.enemies:
+            for enemy in self.world.enemies:
                 d_hero = math.sqrt((self.x - enemy.x)**2 + (self.y - enemy.y)**2)
                 if d_hero <= 8:
                     self.add_injury()
 
     # collect stars
     def collect_stars(self):
-        for star in self.window.stars:
+        for star in self.world.stars:
             d = math.sqrt((self.centerx - star.x)**2 + (self.centery - star.y)**2)
             if d <= 16:
-                self.window.stars.pop(self.window.stars.index(star))
+                self.world.stars.pop(self.world.stars.index(star))
                 self.stars += 1
 
     # add injury when enemies attack hero
@@ -161,4 +162,4 @@ class Hero(pygame.sprite.Group):
             self.lives -= 1
         else:
             self.lives = 3
-        self.__init__(self.window, self.screen, 48, 266, self.lives)
+        self.__init__(self.world, self.screen, 48, 266, self.lives)

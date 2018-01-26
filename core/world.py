@@ -21,7 +21,7 @@ class World():
         self.generate_trees()
         self.generate_stars()
         self.generate_enemies()
-        self.hero = Hero(self, self.screen, 48, 266, 3)
+        self.hero = Hero(self, 48, 266, 3)
 
     def generate_trees(self):
         i = 64
