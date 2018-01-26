@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
 
+from core.hero import *
+from core.tree import *
+from core.star import *
+from core.enemy import *
+
 #LevelGenerator - create game environment for each level
 class LevelGenerator():
     def __init__(self, num, world):
-        self.num, self.screen = num, self.world.screen
+        self.num, self.screen = num, world.screen
 
     def start_point(self):
         if self.num == 1:

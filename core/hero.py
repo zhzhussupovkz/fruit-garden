@@ -121,24 +121,24 @@ class Hero(pygame.sprite.Group):
     # add injury to enemies
     def add_injury_to_enemies(self):
         if self.weapon.drawing == True:
-            for enemy in self.world.enemies:
+            for enemy in self.world.level.enemies:
                 d = math.sqrt((self.weapon.x - enemy.x)**2 + (self.weapon.y - enemy.y)**2)
                 if d <= 4:
                     self.weapon.drawing = False
-                    self.world.enemies.pop(self.world.enemies.index(enemy))
+                    self.world.level.enemies.pop(self.world.level.enemies.index(enemy))
                     self.enemy_score += 1
         else:
-            for enemy in self.world.enemies:
+            for enemy in self.world.level.enemies:
                 d_hero = math.sqrt((self.x - enemy.x)**2 + (self.y - enemy.y)**2)
                 if d_hero <= 8:
                     self.add_injury()
 
     # collect stars
     def collect_stars(self):
-        for star in self.world.stars:
+        for star in self.world.level.stars:
             d = math.sqrt((self.centerx - star.x)**2 + (self.centery - star.y)**2)
             if d <= 16:
-                self.world.stars.pop(self.world.stars.index(star))
+                self.world.level.stars.pop(self.world.level.stars.index(star))
                 self.stars += 1
 
     # add injury when enemies attack hero
@@ -162,4 +162,6 @@ class Hero(pygame.sprite.Group):
             self.lives -= 1
         else:
             self.lives = 3
-        self.__init__(self.world, self.screen, 48, 266, self.lives)
+        start_x = self.world.level.generator.start_point()[0]
+        start_y = self.world.level.generator.start_point()[1]
+        self.__init__(self.world, start_x, start_y, self.lives)
