@@ -6,14 +6,14 @@ class Level():
         self.world = world
         self.num = 1
         self.map = pygame.image.load("./images/levels/level{}.png".format(self.num)).convert()
-        self.hero = Hero(self.world)
         self.generator = LevelGenerator(self.num, self.world)
-        self.generator.start_point(self.hero)
         self.stars = self.generator.generate_stars()
         self.trees = self.generator.generate_trees()
         self.enemies = self.generator.generate_enemies()
+        self.hero = Hero(self.world, self.generator.start_point(), 3)
 
     def draw(self):
+        self.world.screen.blit(self.map, [0, 0])
         for tree in self.trees:
             tree.draw()
         for star in self.stars:
@@ -21,3 +21,9 @@ class Level():
         for enemy in self.enemies:
             enemy.draw()
         self.hero.drawing()
+        self.hero.draw()
+
+    def update(self):
+        for enemy in self.enemies:
+                enemy.walk()
+        self.hero.update()

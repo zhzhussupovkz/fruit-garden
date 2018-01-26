@@ -74,6 +74,7 @@ class World():
         for enemy in self.enemies:
             enemy.draw()
         self.hero.drawing()
+        self.hero.draw(self.screen)
 
     def play(self):
         while True:
@@ -88,7 +89,6 @@ class World():
             for enemy in self.enemies:
                 enemy.walk()
             self.hero.update()
-            self.hero.draw(self.screen)
             pygame.display.flip()
             self.clock.tick(480)
         pygame.quit()

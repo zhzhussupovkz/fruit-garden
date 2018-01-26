@@ -5,9 +5,9 @@ class LevelGenerator():
     def __init__(self, num, world):
         self.num, self.screen = num, self.world.screen
 
-    def start_point(self, hero):
+    def start_point(self):
         if self.num == 1:
-            hero.start_point = 48, 266
+            return (48, 266)
 
     def generate_trees(self):
         trees = []
