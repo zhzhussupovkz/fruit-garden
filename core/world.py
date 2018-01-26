@@ -9,7 +9,7 @@ class World():
 
     def __init__(self):
         pygame.init()
-        self.clock=pygame.time.Clock()
+        self.clock = pygame.time.Clock()
         pygame.display.set_caption('Fruit garden')
         self.pygame = pygame
         self.screen = pygame.display.set_mode(self.SIZE)
@@ -32,5 +32,5 @@ class World():
             self.draw()
             self.update()
             pygame.display.flip()
-            self.clock.tick(480)
+            self.clock.tick(240)
         pygame.quit()
