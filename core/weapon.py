@@ -16,7 +16,6 @@ class Weapon():
 
     def update(self):
         if self.drawing:
-            self.last_direction = self.hero.face
             if self.last_direction == 'left':
                 if self.x >= 2:
                     self.x -= 4
@@ -33,6 +32,7 @@ class Weapon():
                 self.drawing = False
                 self.last_direction = self.hero.face
         else:
+            self.last_direction = self.hero.face
             if self.hero.face == 'left':
                 self.x, self.y = self.hero.x + 12, self.hero.y + 16
             elif self.hero.face == 'right':
