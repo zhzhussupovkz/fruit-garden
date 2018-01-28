@@ -7,6 +7,7 @@ class Level():
     def __init__(self, world):
         self.world = world
         self.num = 1
+        self.world.pygame.mouse.set_pos(320, 320)
         self.map = self.world.pygame.image.load("./images/levels/level{}.png".format(self.num)).convert()
         self.generator = LevelGenerator(self.num, self.world)
         self.stars = self.generator.generate_stars()
