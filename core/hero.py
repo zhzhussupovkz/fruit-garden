@@ -69,6 +69,10 @@ class Hero(pygame.sprite.Group):
         self.heart_img = pygame.image.load('./images/hero/heart.png')
         self.star_img = pygame.image.load('./images/hero/star.png')
         self.enemy_img = pygame.image.load("./images/enemies/enemy-down_3.png")
+        self.sound_collect = pygame.mixer.Sound("./sounds/hero/collect.ogg")
+        self.sound_kill_enemy = pygame.mixer.Sound("./sounds/hero/kill_enemy.ogg")
+        self.sound_collect.set_volume(0.025)
+        self.sound_kill_enemy.set_volume(0.025)
         self.lives, self.stars, self.enemy_score, self.stamina = lives, 0, 0, 100
         self.weapon = Weapon(self.screen, self)
         self.ui = pygame.font.SysFont("monaco", 15)
@@ -200,6 +204,7 @@ class Hero(pygame.sprite.Group):
                 d = math.sqrt((self.weapon.x - enemy.x)**2 + (self.weapon.y - enemy.y)**2)
                 if d <= 4:
                     self.weapon.drawing = False
+                    self.sound_kill_enemy.play()
                     self.world.level.enemies.pop(self.world.level.enemies.index(enemy))
                     self.enemy_score += 1
         else:
@@ -213,6 +218,7 @@ class Hero(pygame.sprite.Group):
         for star in self.world.level.stars:
             d = math.sqrt((self.centerx - star.x)**2 + (self.centery - star.y)**2)
             if d <= 16:
+                self.sound_collect.play()
                 self.world.level.stars.pop(self.world.level.stars.index(star))
                 self.stars += 1
 
