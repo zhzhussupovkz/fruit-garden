@@ -78,13 +78,13 @@ class Hero(pygame.sprite.Group):
     def drawing(self):
         if self.lives > 0:
             for i in range(self.lives):
-                self.screen.blit(self.heart_img, [620-(i*20), 8])
-        self.screen.blit(self.star_img, [540, 6])
-        self.screen.blit(self.enemy_img, [484, 2])
+                self.screen.blit(self.heart_img, [620-(i*20), 4])
+        self.screen.blit(self.star_img, [540, 3])
+        self.screen.blit(self.enemy_img, [484, 0])
         ui_stars_score = self.ui_score.render("{}".format(int(self.stars)), 3, (255, 255, 255))
         ui_enemy_score = self.ui_score.render("{}".format(int(self.enemy_score)), 3, (255, 255, 255))
-        self.screen.blit(ui_stars_score, [558, 7])
-        self.screen.blit(ui_enemy_score, [520, 7])
+        self.screen.blit(ui_stars_score, [558, 4])
+        self.screen.blit(ui_enemy_score, [520, 4])
         self.weapon.draw()
         cyear = datetime.datetime.now().year
         copyright = self.ui.render("Copyright (c) %s by zhzhussupovkz" % cyear, 3, (255, 255, 255))

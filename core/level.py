@@ -10,6 +10,7 @@ class Level():
         self.ui = pygame.font.SysFont("monaco", 24)
         self.world.pygame.mouse.set_pos(320, 320)
         self.map = self.world.pygame.image.load("./images/levels/level{}.png".format(self.num)).convert()
+        self.scoreboard = self.world.pygame.image.load("./images/levels/scoreboard.png").convert()
         self.generator = LevelGenerator(self.num, self.world)
         self.stars = self.generator.generate_stars()
         self.trees = self.generator.generate_trees()
@@ -18,10 +19,9 @@ class Level():
 
     def draw(self):
         self.world.screen.blit(self.map, [0, 0])
+        self.world.screen.blit(self.scoreboard, [0, 0])
         ui_level = self.ui.render("LEVEL {}".format(int(self.num)), 3, (255, 255, 255))
-        self.world.screen.blit(ui_level, [280, 7])
-
-
+        self.world.screen.blit(ui_level, [280, 5])
         for tree in self.trees:
             tree.draw()
         for star in self.stars:
