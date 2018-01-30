@@ -7,6 +7,8 @@ class Weapon():
         self.hero = hero
         self.image = pygame.image.load("./images/hero/apple-player.png")
         self.x, self.y = self.hero.x - 6, self.hero.y + 4
+        self.rect = pygame.Rect(self.x, self.y, 16, 16)
+        self.centerx, self.centery = self.rect.center
         self.screen = screen
         self.drawing, self.last_direction = False, self.hero.face
 
@@ -15,6 +17,8 @@ class Weapon():
             self.screen.blit(self.image, [self.x, self.y])
 
     def update(self):
+        self.rect = pygame.Rect(self.x, self.y, 16, 16)
+        self.centerx, self.centery = self.rect.center
         if self.drawing:
             if self.last_direction == 'left':
                 if self.x >= 2:

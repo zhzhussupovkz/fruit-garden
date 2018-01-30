@@ -201,7 +201,7 @@ class Hero(pygame.sprite.Group):
     def add_injury_to_enemies(self):
         if self.weapon.drawing == True:
             for enemy in self.world.level.enemies:
-                d = math.sqrt((self.weapon.x - enemy.x)**2 + (self.weapon.y - enemy.y)**2)
+                d = math.sqrt((self.weapon.centerx - enemy.centerx)**2 + (self.weapon.centery - enemy.centery)**2)
                 if d <= 4:
                     self.weapon.drawing = False
                     self.sound_kill_enemy.play()
