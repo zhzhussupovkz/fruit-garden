@@ -13,6 +13,8 @@ class LevelGenerator():
     def start_point(self):
         if self.num == 1:
             return (48, 266)
+        elif self.num == 2:
+            return (24, 60)
 
     def generate_trees(self):
         trees = []
@@ -29,7 +31,12 @@ class LevelGenerator():
             trees.append(Tree(self.screen, 560, 350))
             trees.append(Tree(self.screen, 596, 364))
             trees.append(Tree(self.screen, 596, 386))
-            return trees
+        elif self.num == 2:
+            i = 56
+            while i <= 540:
+                trees.append(Tree(self.screen, i, 64))
+                i += 75
+        return trees
 
     def generate_stars(self):
         stars = []
@@ -54,6 +61,20 @@ class LevelGenerator():
             while j <= 560:
                 stars.append(Star(self.screen, 273, j))
                 j += 75
+        elif self.num == 2:
+            i = 175
+            while i <= 600:
+                stars.append(Star(self.screen, i, 79))
+                stars.append(Star(self.screen, i, 544))
+                i += 75
+            j = 160
+            while j <= 540:
+                stars.append(Star(self.screen, 112, j))
+                j += 100
+            k = 144
+            while k <= 540:
+                stars.append(Star(self.screen, 576, k))
+                k += 64
         return stars
 
     def generate_enemies(self):
@@ -64,4 +85,10 @@ class LevelGenerator():
             enemies.append(Enemy(self.screen, 456, 410, 'left'))
             enemies.append(Enemy(self.screen, 500, 570, 'right'))
             enemies.append(Enemy(self.screen, 263, 500, 'up'))
+        elif self.num == 2:
+            enemies.append(Enemy(self.screen, 220, 74, 'left'))
+            enemies.append(Enemy(self.screen, 104, 320, 'up'))
+            enemies.append(Enemy(self.screen, 568, 180, 'down'))
+            enemies.append(Enemy(self.screen, 260, 538, 'right'))
+            enemies.append(Enemy(self.screen, 568, 480, 'down'))
         return enemies
