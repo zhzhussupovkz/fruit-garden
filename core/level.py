@@ -23,7 +23,7 @@ class Level():
         ui_level = self.ui.render("LEVEL {}".format(int(self.num)), 3, (255, 255, 255))
         self.world.screen.blit(ui_level, [280, 5])
         for tree in self.trees:
-            tree.draw()
+            tree.draw(self.world.screen)
         for star in self.stars:
             star.draw()
         for enemy in self.enemies:
@@ -34,4 +34,6 @@ class Level():
     def update(self):
         for enemy in self.enemies:
             enemy.update()
+        for tree in self.trees:
+            tree.update()
         self.hero.update()
