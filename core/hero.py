@@ -176,9 +176,9 @@ class Hero(pygame.sprite.Group):
                 elif key[pygame.K_DOWN]:
                     if self.y <= 63:
                         self.move_down()
-            if (self.x >= 104 and self.x <= 572 and self.y >= 524 and self.y <= 530):
+            if (self.x >= 104 and self.x <= 573 and self.y >= 524 and self.y <= 530):
                 if key[pygame.K_RIGHT]:
-                    if self.x <= 568:
+                    if self.x <= 569:
                         self.move_right()
                 elif key[pygame.K_LEFT]:
                     if self.x >= 105:
@@ -188,6 +188,32 @@ class Hero(pygame.sprite.Group):
                         self.move_up()
                 elif key[pygame.K_DOWN]:
                     if self.y <= 528:
+                        self.move_down()
+            if (self.x >= 568 and self.x <= 620 and self.y >= 570 and self.y <= 573):
+                if key[pygame.K_RIGHT]:
+                    if self.x <= 616:
+                        self.move_right()
+                elif key[pygame.K_LEFT]:
+                    if self.x >= 570:
+                        self.move_left()
+                elif key[pygame.K_UP]:
+                    if self.y >= 571:
+                        self.move_up()
+                elif key[pygame.K_DOWN]:
+                    if self.y <= 572:
+                        self.move_down()
+            if (self.x >= 44 and self.x <= 104 and self.y >= 460 and self.y <= 464):
+                if key[pygame.K_RIGHT]:
+                    if self.x <= 103:
+                        self.move_right()
+                elif key[pygame.K_LEFT]:
+                    if self.x >= 45:
+                        self.move_left()
+                elif key[pygame.K_UP]:
+                    if self.y >= 461:
+                        self.move_up()
+                elif key[pygame.K_DOWN]:
+                    if self.y <= 463:
                         self.move_down()
 
     def walk_on_vertical_roads(self):
@@ -233,18 +259,18 @@ class Hero(pygame.sprite.Group):
                 elif key[pygame.K_DOWN]:
                     if self.y <= 528:
                         self.move_down()
-            if (self.x >= 567 and self.x <= 570 and self.y >= 61 and self.y <= 532):
+            if (self.x >= 566 and self.x <= 570 and self.y >= 61 and self.y <= 575):
                 if key[pygame.K_RIGHT]:
                     if self.x <= 569:
                         self.move_right()
                 elif key[pygame.K_LEFT]:
-                    if self.x >= 568:
+                    if self.x >= 567:
                         self.move_left()
                 elif key[pygame.K_UP]:
                     if self.y >= 62:
                         self.move_up()
                 elif key[pygame.K_DOWN]:
-                    if self.y <= 528:
+                    if self.y <= 571:
                         self.move_down()
 
     # attack by weapon

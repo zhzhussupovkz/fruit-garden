@@ -62,6 +62,7 @@ class LevelGenerator():
                 stars.append(Star(self.screen, 273, j))
                 j += 75
         elif self.num == 2:
+            stars.append(Star(self.screen, 74, 479))
             i = 175
             while i <= 600:
                 stars.append(Star(self.screen, i, 79))
