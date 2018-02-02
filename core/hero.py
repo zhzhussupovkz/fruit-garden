@@ -2,6 +2,7 @@
 import pygame
 import math
 import datetime
+import time
 from core.weapon import *
 
 # hero class - player
@@ -71,6 +72,7 @@ class Hero(pygame.sprite.Group):
         self.enemy_img = pygame.image.load("./images/enemies/enemy-down_3.png")
         self.sound_collect = pygame.mixer.Sound("./sounds/hero/collect.ogg")
         self.sound_kill_enemy = pygame.mixer.Sound("./sounds/hero/kill_enemy.ogg")
+        self.sound_die = pygame.mixer.Sound("./sounds/hero/die.ogg")
         self.sound_collect.set_volume(0.025)
         self.sound_kill_enemy.set_volume(0.025)
         self.lives, self.stars, self.enemy_score, self.stamina = lives, 0, 0, 100
@@ -289,8 +291,8 @@ class Hero(pygame.sprite.Group):
                     self.enemy_score += 1
         else:
             for enemy in self.world.level.enemies:
-                d_hero = math.sqrt((self.x - enemy.x)**2 + (self.y - enemy.y)**2)
-                if d_hero <= 8:
+                d_hero = math.sqrt((self.centerx - enemy.centerx)**2 + (self.centery - enemy.centery)**2)
+                if d_hero <= 25:
                     self.add_injury()
 
     # collect stars
@@ -314,6 +316,8 @@ class Hero(pygame.sprite.Group):
             self.y -= 8
         self.stamina -= 10
         if self.stamina <= 0:
+            self.sound_die.play()
+            time.sleep(3)
             self.stamina = 0
             self.reboot()
 

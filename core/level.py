@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 
+import time
 from core.level_generator import *
 
 #Level - main game logic class
 class Level():
-    def __init__(self, world):
+    def __init__(self, world, num):
         self.world = world
-        self.num = 1
+        self.num = num
         self.ui = pygame.font.SysFont("monaco", 24)
         self.world.pygame.mouse.set_pos(320, 320)
         self.map = self.world.pygame.image.load("./images/levels/level{}.png".format(self.num)).convert()
         self.scoreboard = self.world.pygame.image.load("./images/levels/scoreboard.png").convert()
+        self.sound_win = pygame.mixer.Sound("./sounds/level/win.ogg")
         self.generator = LevelGenerator(self.num, self.world)
         self.stars = self.generator.generate_stars()
         self.trees = self.generator.generate_trees()
@@ -37,3 +39,11 @@ class Level():
         for tree in self.trees:
             tree.update()
         self.hero.update()
+        if self.stars == []:
+            self.go_next_level()
+
+    def go_next_level(self):
+        if self.num <= 1:
+            self.sound_win.play()
+            self.num += 1
+            self.__init__(self.world, self.num)

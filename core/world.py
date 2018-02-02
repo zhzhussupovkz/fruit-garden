@@ -13,7 +13,7 @@ class World():
         pygame.display.set_caption('Fruit garden')
         self.pygame = pygame
         self.screen = pygame.display.set_mode(self.SIZE)
-        self.level = Level(self)
+        self.level = Level(self, 1)
 
     def draw(self):
         self.level.draw()
