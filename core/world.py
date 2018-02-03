@@ -10,7 +10,9 @@ class World():
     def __init__(self):
         pygame.init()
         self.clock = pygame.time.Clock()
+        self.icon_img = pygame.image.load("./images/levels/game.png")
         pygame.display.set_caption('Fruit garden')
+        pygame.display.set_icon(self.icon_img)
         self.pygame = pygame
         self.screen = pygame.display.set_mode(self.SIZE)
         self.level = Level(self, 1)
