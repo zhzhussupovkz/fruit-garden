@@ -73,6 +73,7 @@ class Hero(pygame.sprite.Group):
         self.sound_collect = pygame.mixer.Sound("./sounds/hero/collect.ogg")
         self.sound_kill_enemy = pygame.mixer.Sound("./sounds/hero/kill_enemy.ogg")
         self.sound_die = pygame.mixer.Sound("./sounds/hero/die.ogg")
+        self.sound_game_over = pygame.mixer.Sound("./sounds/level/game_over.ogg")
         self.sound_collect.set_volume(0.025)
         self.sound_kill_enemy.set_volume(0.025)
         self.lives, self.stars, self.enemy_score, self.stamina = lives, 0, 0, 100
@@ -97,17 +98,22 @@ class Hero(pygame.sprite.Group):
         self.screen.blit(copyright, [240, 620])
 
     def update(self):
-        self.face = self.hero_sprite.face
-        self.x, self.y = self.hero_sprite.x, self.hero_sprite.y
-        self.centerx, self.centery = self.hero_sprite.rect.centerx, self.hero_sprite.rect.centery
-        key = pygame.key.get_pressed()
-        if key[pygame.K_SPACE]:
-            self.attack()
-        self.weapon.update()
-        self.walk_on_horizontal_roads()
-        self.walk_on_vertical_roads()
-        self.collect_stars()
-        self.add_injury_to_enemies()
+        if self.lives > 0:
+            self.face = self.hero_sprite.face
+            self.x, self.y = self.hero_sprite.x, self.hero_sprite.y
+            self.centerx, self.centery = self.hero_sprite.rect.centerx, self.hero_sprite.rect.centery
+            key = pygame.key.get_pressed()
+            if key[pygame.K_SPACE]:
+                self.attack()
+            self.weapon.update()
+            self.walk_on_horizontal_roads()
+            self.walk_on_vertical_roads()
+            self.collect_stars()
+            self.add_injury_to_enemies()
+        else:
+            self.world.level.game_over = True
+            self.sound_game_over.play()
+            self.world.pause = True
         super(Hero, self).update()
 
     def move_left(self):
@@ -316,17 +322,15 @@ class Hero(pygame.sprite.Group):
             self.y -= 8
         self.stamina -= 10
         if self.stamina <= 0:
-            self.sound_die.play()
-            time.sleep(3)
-            self.stamina = 0
-            self.reboot()
+            if self.lives > 0:
+                self.sound_die.play()
+                time.sleep(3)
+                self.stamina = 0
+                self.reboot()
 
     # reboot hero if die
     def reboot(self):
-        if self.lives > 1:
-            self.lives -= 1
-        else:
-            self.lives = 3
+        self.lives -= 1
         start_x = self.world.level.generator.start_point()[0]
         start_y = self.world.level.generator.start_point()[1]
         self.__init__(self.world, start_x, start_y, self.lives)

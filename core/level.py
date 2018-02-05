@@ -14,6 +14,7 @@ class Level():
         self.scoreboard = self.world.pygame.image.load("./images/levels/scoreboard.png").convert()
         self.sound_win = pygame.mixer.Sound("./sounds/level/win.ogg")
         self.generator = LevelGenerator(self.num, self.world)
+        self.game_over, self.game_over_font = False, pygame.font.SysFont("monaco", 32)
         self.stars = self.generator.generate_stars()
         self.trees = self.generator.generate_trees()
         self.enemies = self.generator.generate_enemies()
@@ -23,7 +24,10 @@ class Level():
         self.world.screen.blit(self.map, [0, 0])
         self.world.screen.blit(self.scoreboard, [0, 0])
         ui_level = self.ui.render("LEVEL {}".format(int(self.num)), 3, (255, 255, 255))
+        ui_game_over = self.game_over_font.render("GAME OVER", 5, (255, 255, 255))
         self.world.screen.blit(ui_level, [280, 5])
+        if self.game_over:
+            self.world.screen.blit(ui_game_over, [220, 320])
         for tree in self.trees:
             tree.draw(self.world.screen)
         for star in self.stars:
