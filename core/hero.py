@@ -16,10 +16,24 @@ class HeroSprite(pygame.sprite.Sprite):
             self.right.append(pygame.image.load("./images/hero/hero-right_{}.png".format(i+1)))
             self.down.append(pygame.image.load("./images/hero/hero-down_{}.png".format(i+1)))
             self.up.append(pygame.image.load("./images/hero/hero-up_{}.png".format(i+1)))
+
+        self.attack_img = ()
+        for i in ['left', 'right', 'up', 'down']:
+            self.attack_img += (pygame.image.load("./images/hero/hero-attack-{}.png".format(i)),)
         self.index = 0
         self.image = self.right[self.index]
         self.x, self.y, self.face = x, y, 'right'
         self.rect = pygame.Rect(self.x, self.y, 16, 16)
+
+    def attack(self):
+        if self.face == 'left':
+            self.image = self.attack_img[0]
+        elif self.face == 'right':
+            self.image = self.attack_img[1]
+        elif self.face == 'up':
+            self.image = self.attack_img[2]
+        elif self.face == 'down':
+            self.image = self.attack_img[3]
 
     def move_left(self):
         self.face = 'left'
@@ -283,6 +297,7 @@ class Hero(pygame.sprite.Group):
 
     # attack by weapon
     def attack(self):
+        self.hero_sprite.attack()
         self.weapon.drawing = True
 
     # add injury to enemies
