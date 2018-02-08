@@ -31,6 +31,7 @@ class LevelGenerator():
             trees.append(Tree(self.screen, 560, 350))
             trees.append(Tree(self.screen, 596, 364))
             trees.append(Tree(self.screen, 596, 386))
+            trees.append(Tree(self.screen, 320, 400))
         elif self.num == 2:
             i = 56
             while i <= 540:
