@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import pygame
 import random
+from core.weapon_fire import *
 
 # enemy sprite
 class EnemySprite(pygame.sprite.Sprite):
@@ -90,6 +91,7 @@ class Enemy(pygame.sprite.Group):
         self.enemy_sprite = EnemySprite(self.screen, x, y, face)
         self.x, self.y, self.face = self.enemy_sprite.x, self.enemy_sprite.y, self.enemy_sprite.face
         self.centerx, self.centery = self.enemy_sprite.rect.centerx, self.enemy_sprite.rect.centery
+        self.weapon = WeaponFire(self.screen, self)
         super(Enemy, self).__init__(self.enemy_sprite)
 
     def update(self):

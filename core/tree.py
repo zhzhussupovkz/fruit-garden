@@ -7,7 +7,6 @@ class TreeSprite(pygame.sprite.Sprite):
         super(TreeSprite, self).__init__()
         self.x, self.y = x, y
         self.screen = screen
-        self.apple = False
         self.images = []
         self.images.append(pygame.image.load("./images/resources/tree.png"))
         self.images.append(pygame.image.load("./images/resources/tree-apple.png"))
