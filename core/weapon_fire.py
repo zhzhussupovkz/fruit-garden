@@ -36,41 +36,60 @@ class WeaponFireSprite(pygame.sprite.Sprite):
 class WeaponFire(pygame.sprite.Group):
     def __init__(self, screen, enemy):
         self.enemy, self.screen = enemy, screen
-        self.x, self.y = self.enemy.x - 6, self.enemy.y + 4
+        self.drawing, self.last_direction = False, self.enemy.face
+        if self.last_direction == 'left':
+            self.x, self.y = self.enemy.x, self.enemy.y
+        elif self.last_direction == 'right':
+            self.x, self.y = self.enemy.x + 4, self.enemy.y
+        elif self.last_direction == 'up':
+            self.x, self.y = self.enemy.x + 2, self.enemy.y
+        elif self.last_direction == 'down':
+            self.x, self.y = self.enemy.x, self.enemy.y + 4
         self.rect = pygame.Rect(self.x, self.y, 32, 32)
         self.centerx, self.centery = self.rect.center
-        self.drawing, self.last_direction = False, self.enemy.face
         self.weapon_fire_sprite = WeaponFireSprite(self.screen, self.last_direction, self.x, self.y)
         super(WeaponFire, self).__init__(self.weapon_fire_sprite)
 
+    def draw(self):
+        if self.drawing:
+            self.screen.blit(self.weapon_fire_sprite.image, [self.x, self.y])
+
     def update(self):
-        self.rect = pygame.Rect(self.x, self.y, 32, 32)
         self.centerx, self.centery = self.rect.center
         if self.drawing:
             if self.last_direction == 'left':
                 if self.x >= 2:
-                    self.x -= 4
+                    self.x -= 0.5
             elif self.last_direction == 'right':
                 if self.x <= 632:
-                    self.x += 4
+                    self.x += 0.5
             elif self.last_direction == 'up':
                 if self.y >= 2:
-                    self.y -= 4
+                    self.y -= 0.5
             elif self.last_direction == 'down':
                 if self.y <= 632:
-                    self.y += 4
+                    self.y += 0.5
             if self.x <= 4 or self.x >= 632 or self.y <= 4 or self.y >= 632:
                 self.drawing = False
                 self.last_direction = self.enemy.face
+                if self.enemy.face == 'left':
+                    self.x, self.y = self.enemy.x, self.enemy.y
+                elif self.enemy.face == 'right':
+                    self.x, self.y = self.enemy.x + 4, self.enemy.y
+                elif self.enemy.face == 'up':
+                    self.x, self.y = self.enemy.x + 2, self.enemy.y
+                elif self.enemy.face == 'down':
+                    self.x, self.y = self.enemy.x, self.enemy.y + 4
         else:
             self.last_direction = self.enemy.face
             if self.enemy.face == 'left':
-                self.x, self.y = self.enemy.x + 12, self.enemy.y + 16
+                self.x, self.y = self.enemy.x, self.enemy.y
             elif self.enemy.face == 'right':
-                self.x, self.y = self.enemy.x + 12, self.enemy.y + 16
+                self.x, self.y = self.enemy.x + 4, self.enemy.y
             elif self.enemy.face == 'up':
-                self.x, self.y = self.enemy.x + 12, self.enemy.y + 16
+                self.x, self.y = self.enemy.x + 2, self.enemy.y
             elif self.enemy.face == 'down':
-                self.x, self.y = self.enemy.x + 12, self.enemy.y + 16
+                self.x, self.y = self.enemy.x, self.enemy.y + 4
+        self.rect = pygame.Rect(self.x, self.y, 32, 32)
         super(WeaponFire, self).update()
 

@@ -95,10 +95,12 @@ class Enemy(pygame.sprite.Group):
         super(Enemy, self).__init__(self.enemy_sprite)
 
     def update(self):
+        self.x, self.y = self.enemy_sprite.x, self.enemy_sprite.y
+        self.face = self.enemy_sprite.face
         self.centerx, self.centery = self.enemy_sprite.rect.centerx, self.enemy_sprite.rect.centery
         self.weapon.update()
         super(Enemy, self).update()
 
     def draw(self, screen):
-        self.weapon.draw(screen)
+        self.weapon.draw()
         super(Enemy, self).draw(screen)
