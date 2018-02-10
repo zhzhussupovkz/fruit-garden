@@ -2,23 +2,34 @@
 import pygame
 
 class WeaponFireSprite(pygame.sprite.Sprite):
-    def __init__(self, screen, x, y):
+    def __init__(self, screen, last_direction, x, y):
         super(WeaponFireSprite, self).__init__()
         self.x, self.y = x, y
+        self.last_direction = last_direction
         self.screen = screen
-        self.images = []
+        self.left, self.right, self.up, self.down = [], [], [], []
         for i in range(6):
-            self.images.append(pygame.image.load("./images/enemies/weapon-fire-right_{}.png".format(i+1)))
+            self.right.append(pygame.image.load("./images/enemies/weapon-fire-right_{}.png".format(i+1)))
+            self.left.append(pygame.image.load("./images/enemies/weapon-fire-left_{}.png".format(i+1)))
+            self.up.append(pygame.image.load("./images/enemies/weapon-fire-up_{}.png".format(i+1)))
+            self.down.append(pygame.image.load("./images/enemies/weapon-fire-down_{}.png".format(i+1)))
         self.index = 0
-        self.image = self.images[self.index]
+        self.image = self.right[self.index]
         self.rect = pygame.Rect(self.x, self.y, 32, 32)
 
     def update(self):
         self.index += 1
-        if self.index >= len(self.images) * 20:
+        if self.index >= len(self.left) * 20:
             self.index = 0
         if self.index % 20 == 0:
-            self.image = self.images[int(self.index/20)]
+            if self.last_direction == 'left':
+                self.image = self.left[int(self.index/20)]
+            elif self.last_direction == 'right':
+                self.image = self.right[int(self.index/20)]
+            elif self.last_direction == 'up':
+                self.image = self.up[int(self.index/20)]
+            elif self.last_direction == 'down':
+                self.image = self.down[int(self.index/20)]
         super(WeaponFireSprite, self).update()
 
 # enemy's weapon class (fire)
@@ -26,14 +37,14 @@ class WeaponFire(pygame.sprite.Group):
     def __init__(self, screen, enemy):
         self.enemy, self.screen = enemy, screen
         self.x, self.y = self.enemy.x - 6, self.enemy.y + 4
-        self.weapon_fire_sprite = WeaponFireSprite(self.screen, self.x, self.y)
         self.rect = pygame.Rect(self.x, self.y, 32, 32)
         self.centerx, self.centery = self.rect.center
         self.drawing, self.last_direction = False, self.enemy.face
+        self.weapon_fire_sprite = WeaponFireSprite(self.screen, self.last_direction, self.x, self.y)
         super(WeaponFire, self).__init__(self.weapon_fire_sprite)
 
     def update(self):
-        self.rect = pygame.Rect(self.x, self.y, 16, 16)
+        self.rect = pygame.Rect(self.x, self.y, 32, 32)
         self.centerx, self.centery = self.rect.center
         if self.drawing:
             if self.last_direction == 'left':
@@ -61,4 +72,5 @@ class WeaponFire(pygame.sprite.Group):
                 self.x, self.y = self.enemy.x + 12, self.enemy.y + 16
             elif self.enemy.face == 'down':
                 self.x, self.y = self.enemy.x + 12, self.enemy.y + 16
+        super(WeaponFire, self).update()
 

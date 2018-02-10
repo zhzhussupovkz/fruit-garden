@@ -96,4 +96,9 @@ class Enemy(pygame.sprite.Group):
 
     def update(self):
         self.centerx, self.centery = self.enemy_sprite.rect.centerx, self.enemy_sprite.rect.centery
+        self.weapon.update()
         super(Enemy, self).update()
+
+    def draw(self, screen):
+        self.weapon.draw(screen)
+        super(Enemy, self).draw(screen)
