@@ -15,6 +15,7 @@ class EnemySprite(pygame.sprite.Sprite):
             self.down.append(pygame.image.load("./images/enemies/enemy-down_{}.png".format(i+1)))
             self.up.append(pygame.image.load("./images/enemies/enemy-up_{}.png".format(i+1)))
         self.index = 0
+        self.attack = False
         self.image = self.right[self.index]
         self.x, self.y, self.face = x, y, face
         self.right_x, self.left_x = x + random.randint(64, 72), x - random.randint(64, 72)
@@ -66,21 +67,25 @@ class EnemySprite(pygame.sprite.Sprite):
             if self.x <= self.right_x:
                 self.move_right()
             else:
+                self.attack = True
                 self.face = 'left'
         elif self.face == 'left':
             if self.x >= self.left_x:
                 self.move_left()
             else:
+                self.attack = True
                 self.face = 'right'
         elif self.face == 'down':
             if self.y <= self.down_y:
                 self.move_down()
             else:
+                self.attack = True
                 self.face = 'up'
         elif self.face == 'up':
             if self.y >= self.up_y:
                 self.move_up()
             else:
+                self.attack = True
                 self.face = 'down'
         super(EnemySprite, self).update()
 
@@ -91,6 +96,8 @@ class Enemy(pygame.sprite.Group):
         self.enemy_sprite = EnemySprite(self.screen, x, y, face)
         self.x, self.y, self.face = self.enemy_sprite.x, self.enemy_sprite.y, self.enemy_sprite.face
         self.centerx, self.centery = self.enemy_sprite.rect.centerx, self.enemy_sprite.rect.centery
+        self.right_x, self.left_x = self.enemy_sprite.right_x, self.enemy_sprite.left_x
+        self.down_y, self.up_y = self.enemy_sprite.down_y, self.enemy_sprite.up_y
         self.weapon = WeaponFire(self.screen, self)
         super(Enemy, self).__init__(self.enemy_sprite)
 
@@ -98,8 +105,14 @@ class Enemy(pygame.sprite.Group):
         self.x, self.y = self.enemy_sprite.x, self.enemy_sprite.y
         self.face = self.enemy_sprite.face
         self.centerx, self.centery = self.enemy_sprite.rect.centerx, self.enemy_sprite.rect.centery
+        self.right_x, self.left_x = self.enemy_sprite.right_x, self.enemy_sprite.left_x
+        self.down_y, self.up_y = self.enemy_sprite.down_y, self.enemy_sprite.up_y
         self.weapon.update()
         super(Enemy, self).update()
+
+    def attack(self):
+        if self.enemy_sprite.attack == True:
+            self.weapon.drawing = True
 
     def draw(self, screen):
         self.weapon.draw()

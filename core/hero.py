@@ -315,6 +315,10 @@ class Hero(pygame.sprite.Group):
                 d_hero = math.sqrt((self.centerx - enemy.centerx)**2 + (self.centery - enemy.centery)**2)
                 if d_hero <= 25:
                     self.add_injury()
+                elif d_hero <= 100:
+                    enemy.attack()
+                elif d_hero >= 100:
+                    enemy.weapon.drawing = False
 
     # collect stars
     def collect_stars(self):
