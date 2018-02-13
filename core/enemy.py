@@ -15,7 +15,6 @@ class EnemySprite(pygame.sprite.Sprite):
             self.down.append(pygame.image.load("./images/enemies/enemy-down_{}.png".format(i+1)))
             self.up.append(pygame.image.load("./images/enemies/enemy-up_{}.png".format(i+1)))
         self.index = 0
-        self.attack = False
         self.image = self.right[self.index]
         self.x, self.y, self.face = x, y, face
         self.right_x, self.left_x = x + random.randint(64, 72), x - random.randint(64, 72)
@@ -67,25 +66,21 @@ class EnemySprite(pygame.sprite.Sprite):
             if self.x <= self.right_x:
                 self.move_right()
             else:
-                self.attack = True
                 self.face = 'left'
         elif self.face == 'left':
             if self.x >= self.left_x:
                 self.move_left()
             else:
-                self.attack = True
                 self.face = 'right'
         elif self.face == 'down':
             if self.y <= self.down_y:
                 self.move_down()
             else:
-                self.attack = True
                 self.face = 'up'
         elif self.face == 'up':
             if self.y >= self.up_y:
                 self.move_up()
             else:
-                self.attack = True
                 self.face = 'down'
         super(EnemySprite, self).update()
 
@@ -111,8 +106,7 @@ class Enemy(pygame.sprite.Group):
         super(Enemy, self).update()
 
     def attack(self):
-        if self.enemy_sprite.attack == True:
-            self.weapon.drawing = True
+        self.weapon.drawing = True
 
     def draw(self, screen):
         self.weapon.draw()

@@ -315,13 +315,33 @@ class Hero(pygame.sprite.Group):
                 d_hero = math.sqrt((self.centerx - enemy.centerx)**2 + (self.centery - enemy.centery)**2)
                 if d_hero <= 25:
                     self.add_injury()
-                elif d_hero <= 100:
+                if self.hero_see_enemy(enemy):
                     enemy.attack()
-                elif d_hero >= 100:
+                else:
                     enemy.weapon.drawing = False
 
-    def hero_see_enemies(self, hero, enemy):
-        pass
+    def hero_see_enemy(self, enemy):
+        if enemy.face == 'left':
+            dx = enemy.centerx - self.centerx
+            dy = abs(self.centery - enemy.centery)
+            if dx > 0 and dx < 128 and dy <= 20:
+                return True
+        elif enemy.face == 'right':
+            dx = self.centerx - enemy.centerx
+            dy = abs(self.centery - enemy.centery)
+            if dx > 0 and dx < 128 and dy <= 20:
+                return True
+        elif enemy.face == 'up':
+            dx = abs(self.centerx - enemy.centerx)
+            dy = enemy.centery - self.centery
+            if dy > 0 and dy < 128 and dx <= 20:
+                return True
+        elif enemy.face == 'down':
+            dx = abs(self.centerx - enemy.centerx)
+            dy = self.centery - enemy.centery
+            if dy > 0 and dy < 128 and dx <= 20:
+                return True
+        return False
 
     # collect stars
     def collect_stars(self):
