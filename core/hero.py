@@ -320,6 +320,9 @@ class Hero(pygame.sprite.Group):
                 elif d_hero >= 100:
                     enemy.weapon.drawing = False
 
+    def hero_see_enemies(self, hero, enemy):
+        pass
+
     # collect stars
     def collect_stars(self):
         for star in self.world.level.stars:
