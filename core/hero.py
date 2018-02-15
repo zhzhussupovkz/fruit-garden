@@ -313,8 +313,15 @@ class Hero(pygame.sprite.Group):
         else:
             for enemy in self.world.level.enemies:
                 d_hero = math.sqrt((self.centerx - enemy.centerx)**2 + (self.centery - enemy.centery)**2)
+                d_hero_fire = math.sqrt((self.centerx - enemy.weapon.centerx)**2 + (self.centery - enemy.weapon.centery)**2)
+                d_weapons = math.sqrt((self.weapon.centerx - enemy.weapon.centerx)**2 + (self.weapon.centery - enemy.weapon.centery)**2)
                 if d_hero <= 25:
                     self.add_injury()
+                if d_hero_fire <= 25:
+                    self.add_injury()
+                if d_weapons <= 20:
+                    self.weapon.drawing = False
+                    enemy.weapon.drawing = False
                 if self.hero_see_enemy(enemy):
                     enemy.attack()
                 else:
